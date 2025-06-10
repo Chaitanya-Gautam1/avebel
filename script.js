@@ -1,30 +1,23 @@
-// Game data storage
 let games = [];
 let filteredGames = [];
 
-// DOM elements
 const gamesGrid = document.getElementById('gamesGrid');
 const searchInput = document.getElementById('searchInput');
 
-// Initialize the website
 document.addEventListener('DOMContentLoaded', function() {
     loadGames();
     setupEventListeners();
     setupNavigation();
 });
 
-// Setup event listeners
 function setupEventListeners() {
-    // Search functionality
     searchInput.addEventListener('input', handleSearch);
-    
-    // Smooth scrolling for navigation
+
     document.querySelectorAll('.nav-link').forEach(link => {
         link.addEventListener('click', handleNavClick);
     });
 }
 
-// Setup navigation highlighting
 function setupNavigation() {
     const sections = document.querySelectorAll('section[id]');
     const navLinks = document.querySelectorAll('.nav-link');
@@ -48,16 +41,15 @@ function setupNavigation() {
     });
 }
 
-// Handle navigation clicks
 function handleNavClick(e) {
     e.preventDefault();
     const targetId = this.getAttribute('href');
     const targetSection = document.querySelector(targetId);
-    
+
     if (targetSection) {
         const headerHeight = document.querySelector('.header').offsetHeight;
         const targetPosition = targetSection.offsetTop - headerHeight;
-        
+
         window.scrollTo({
             top: targetPosition,
             behavior: 'smooth'
@@ -65,28 +57,24 @@ function handleNavClick(e) {
     }
 }
 
-// Scroll to games section
 function scrollToGames() {
     const gamesSection = document.getElementById('games');
     const headerHeight = document.querySelector('.header').offsetHeight;
     const targetPosition = gamesSection.offsetTop - headerHeight;
-    
+
     window.scrollTo({
         top: targetPosition,
         behavior: 'smooth'
     });
 }
 
-// Load games from the Games directory
 async function loadGames() {
     try {
-        // Simulate loading time for better UX
         await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Try to fetch the games directory structure
+
         games = await discoverGames();
         filteredGames = [...games];
-        
+
         if (games.length === 0) {
             displayNoGames();
         } else {
@@ -98,80 +86,66 @@ async function loadGames() {
     }
 }
 
-// Discover games in the Games directory
 async function discoverGames() {
-    const discoveredGames = [];
-    
-    // Try to fetch the Games directory listing (this won't work on most static hosts)
-    // So we'll try common game names that might exist
-    const commonGameNames = [
+    const gameDirectories = [
         'Money Tycoon'
     ];
-    
-    // Try to discover actual games by checking for index.html files
-    for (const gameName of commonGameNames) {
+
+    const discoveredGames = [];
+
+    for (const gameName of gameDirectories) {
         try {
-            const response = await fetch(`Games/${gameName}/index.html`, { method: 'HEAD' });
+            const response = await fetch(`Games/${encodeURIComponent(gameName)}/index.html`, { method: 'HEAD' });
             if (response.ok) {
                 const game = {
-                    name: formatGameName(gameName),
-                    path: `Games/${gameName}/`,
+                    name: gameName,
+                    path: `Games/${encodeURIComponent(gameName)}/`,
                     directory: gameName,
                     hasLogo: await checkForLogo(gameName)
                 };
                 discoveredGames.push(game);
             }
         } catch (error) {
-            // Game directory doesn't exist or isn't accessible
-            continue;
+            console.log(`Game "${gameName}" not found or not accessible`);
         }
     }
-    
+
     return discoveredGames;
 }
 
-// Check if a game has a logo.png file
 async function checkForLogo(gameName) {
     try {
-        const response = await fetch(`Games/${gameName}/logo.png`, { method: 'HEAD' });
+        const response = await fetch(`Games/${encodeURIComponent(gameName)}/logo.png`, { method: 'HEAD' });
         return response.ok;
-    } catch (error) {
+    } catch {
         return false;
     }
 }
 
-// Format game name for display
 function formatGameName(name) {
-    return name
-        .split('-')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-        .join(' ');
+    return name;
 }
 
-
-
-// Display games in the grid
 function displayGames(gamesToDisplay) {
     gamesGrid.innerHTML = '';
-    
+
     gamesToDisplay.forEach(game => {
         const gameCard = createGameCard(game);
         gamesGrid.appendChild(gameCard);
     });
 }
 
-// Create a game card element
 function createGameCard(game) {
     const card = document.createElement('div');
     card.className = 'game-card';
     card.onclick = () => playGame(game);
-    
-    const imageSection = game.hasLogo 
+
+    const imageSection = game.hasLogo
         ? `<img src="${game.path}logo.png" alt="${game.name}" class="game-image" onerror="this.parentElement.innerHTML='<div class=\\"game-title-card\\">${game.name}</div>'">`
         : `<div class="game-title-card">${game.name}</div>`;
-    
+
     const description = game.description || `Play ${game.name} - An exciting web game!`;
-    
+
     card.innerHTML = `
         ${imageSection}
         <div class="game-info">
@@ -182,31 +156,27 @@ function createGameCard(game) {
             <i class="fas fa-play"></i>
         </button>
     `;
-    
+
     return card;
 }
 
-// Handle search functionality
 function handleSearch(event) {
     const searchTerm = event.target.value.toLowerCase().trim();
-    
-    if (searchTerm === '') {
-        filteredGames = [...games];
-    } else {
-        filteredGames = games.filter(game => 
+
+    filteredGames = searchTerm === ''
+        ? [...games]
+        : games.filter(game =>
             game.name.toLowerCase().includes(searchTerm) ||
             (game.description && game.description.toLowerCase().includes(searchTerm))
         );
-    }
-    
+
     displayGames(filteredGames);
-    
+
     if (filteredGames.length === 0) {
         displayNoResults(searchTerm);
     }
 }
 
-// Display no results message
 function displayNoResults(searchTerm) {
     gamesGrid.innerHTML = `
         <div class="no-games">
@@ -217,7 +187,6 @@ function displayNoResults(searchTerm) {
     `;
 }
 
-// Display no games message
 function displayNoGames() {
     gamesGrid.innerHTML = `
         <div class="no-games">
@@ -228,19 +197,15 @@ function displayNoGames() {
     `;
 }
 
-// Play a game
 function playGame(game) {
-    // Add click animation
     const card = event.currentTarget;
     card.style.transform = 'scale(0.95)';
     setTimeout(() => {
         card.style.transform = '';
     }, 150);
-    
-    // Check if the game exists
+
     checkGameExists(game).then(exists => {
         if (exists) {
-            // Open game in new tab/window
             window.open(game.path, '_blank');
         } else {
             showGameNotFoundMessage(game);
@@ -248,19 +213,16 @@ function playGame(game) {
     });
 }
 
-// Check if game exists
 async function checkGameExists(game) {
     try {
         const response = await fetch(`${game.path}index.html`, { method: 'HEAD' });
         return response.ok;
-    } catch (error) {
+    } catch {
         return false;
     }
 }
 
-// Show game not found message
 function showGameNotFoundMessage(game) {
-    // Create modal overlay
     const modal = document.createElement('div');
     modal.style.cssText = `
         position: fixed;
@@ -275,7 +237,7 @@ function showGameNotFoundMessage(game) {
         z-index: 10000;
         backdrop-filter: blur(10px);
     `;
-    
+
     modal.innerHTML = `
         <div style="
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
@@ -309,45 +271,40 @@ function showGameNotFoundMessage(game) {
             </button>
         </div>
     `;
-    
-    // Close modal when clicking outside
+
     modal.onclick = (e) => {
         if (e.target === modal) {
             modal.remove();
         }
     };
-    
-    // Close modal with Escape key
+
     document.addEventListener('keydown', function escapeHandler(e) {
         if (e.key === 'Escape') {
             modal.remove();
             document.removeEventListener('keydown', escapeHandler);
         }
     });
-    
+
     document.body.appendChild(modal);
 }
 
-// Add some interactive animations
 document.addEventListener('DOMContentLoaded', function() {
-    // Add hover effect to navigation
     const navLinks = document.querySelectorAll('.nav-link');
     navLinks.forEach(link => {
         link.addEventListener('mouseenter', function() {
             this.style.transform = 'translateY(-2px)';
         });
-        
+
         link.addEventListener('mouseleave', function() {
             this.style.transform = 'translateY(0)';
         });
     });
-    
-    // Add scroll reveal animation
+
     const observerOptions = {
         threshold: 0.1,
         rootMargin: '0px 0px -50px 0px'
     };
-    
+
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -356,8 +313,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }, observerOptions);
-    
-    // Observe sections for scroll animations
+
     document.querySelectorAll('.games-section, .about-section').forEach(section => {
         section.style.opacity = '0';
         section.style.transform = 'translateY(30px)';
@@ -366,11 +322,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-// Add particle effects on button hover
 function addParticleEffect(element) {
     const particles = [];
     const particleCount = 15;
-    
+
     for (let i = 0; i < particleCount; i++) {
         const particle = document.createElement('div');
         particle.style.cssText = `
@@ -382,36 +337,28 @@ function addParticleEffect(element) {
             pointer-events: none;
             z-index: -1;
         `;
-        
+
         const rect = element.getBoundingClientRect();
         particle.style.left = (rect.left + Math.random() * rect.width) + 'px';
         particle.style.top = (rect.top + Math.random() * rect.height) + 'px';
-        
+
         document.body.appendChild(particle);
         particles.push(particle);
-        
-        // Animate particle
+
         const animation = particle.animate([
-            { 
-                opacity: 1, 
-                transform: 'translate(0, 0) scale(1)' 
-            },
-            { 
-                opacity: 0, 
-                transform: `translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px) scale(0)` 
-            }
+            { opacity: 1, transform: 'translate(0, 0) scale(1)' },
+            { opacity: 0, transform: `translate(${(Math.random() - 0.5) * 100}px, ${(Math.random() - 0.5) * 100}px) scale(0)` }
         ], {
             duration: 1000,
             easing: 'ease-out'
         });
-        
+
         animation.onfinish = () => {
             particle.remove();
         };
     }
 }
 
-// Add particle effect to CTA button
 document.addEventListener('DOMContentLoaded', function() {
     const ctaButton = document.querySelector('.cta-button');
     if (ctaButton) {
@@ -421,15 +368,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-// Console welcome message
-console.log(`
-🎮 Welcome to GameHub!
-=====================================
-Discovering games from the repository...
-=====================================
-`);
-
-// Performance optimization: Lazy load images
 function setupLazyLoading() {
     if ('IntersectionObserver' in window) {
         const imageObserver = new IntersectionObserver((entries, observer) => {
@@ -442,9 +380,10 @@ function setupLazyLoading() {
                 }
             });
         });
-        
+
         document.querySelectorAll('img[data-src]').forEach(img => {
             imageObserver.observe(img);
         });
     }
 }
+    
