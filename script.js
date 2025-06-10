@@ -68,6 +68,11 @@ function scrollToGames() {
     });
 }
 
+function toggleMobileNav() {
+    const nav = document.getElementById('nav');
+    nav.classList.toggle('active');
+}
+
 async function loadGames() {
     try {
         await new Promise(resolve => setTimeout(resolve, 1000));
@@ -386,4 +391,3 @@ function setupLazyLoading() {
         });
     }
 }
-    
