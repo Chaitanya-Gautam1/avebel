@@ -17,7 +17,12 @@
                 <i class="fas fa-gamepad"></i>
                 <h1>Avebel</h1>
             </div>
-            <nav class="nav">
+            <div class="mobile-toggle" onclick="toggleMobileNav()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav class="nav" id="nav">
                 <a href="#home" class="nav-link active">Home</a>
                 <a href="#games" class="nav-link">Games</a>
                 <a href="#about" class="nav-link">About</a>
@@ -30,7 +35,7 @@
             <div class="container">
                 <div class="hero-content">
                     <h2 class="hero-title">Welcome to Your Gaming Universe</h2>
-                    <p class="hero-subtitle">Discover and play amazing web games from your personal collection</p>
+                    <p class="hero-subtitle">Discover and play amazing web games from your personal collection with Avebel's beautiful interface</p>
                     <button class="cta-button" onclick="scrollToGames()">
                         <i class="fas fa-play"></i>
                         Start Playing
@@ -48,7 +53,7 @@
                 </div>
                 <div id="gamesGrid" class="games-grid">
                     <div class="loading">
-                        <i class="fas fa-spinner fa-spin"></i>
+                        <i class="fas fa-spinner"></i>
                         <p>Loading games...</p>
                     </div>
                 </div>
@@ -57,24 +62,29 @@
 
         <section id="about" class="about-section">
             <div class="container">
-                <h2 class="section-title">About GameHub</h2>
+                <h2 class="section-title">About Avebel</h2>
                 <div class="about-content">
-                    <p>GameHub is your personal gaming portal, showcasing your collection of web games in a beautiful, modern interface. Each game is automatically detected from your Games folder and presented with style.</p>
+                    <p>Avebel is your personal gaming portal, showcasing your collection of web games in a beautiful, modern interface. Each game is automatically detected from your Games folder and presented with style.</p>
                     <div class="features">
                         <div class="feature">
                             <i class="fas fa-rocket"></i>
                             <h3>Fast Loading</h3>
-                            <p>Optimized for quick game discovery and launch</p>
+                            <p>Optimized for quick game discovery and launch with smooth animations</p>
                         </div>
                         <div class="feature">
                             <i class="fas fa-search"></i>
                             <h3>Easy Search</h3>
-                            <p>Find your favorite games instantly</p>
+                            <p>Find your favorite games instantly with our intelligent search system</p>
                         </div>
                         <div class="feature">
                             <i class="fas fa-mobile-alt"></i>
-                            <h3>Responsive</h3>
-                            <p>Works perfectly on all devices</p>
+                            <h3>Responsive Design</h3>
+                            <p>Works perfectly on all devices from desktop to mobile</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-palette"></i>
+                            <h3>Beautiful Interface</h3>
+                            <p>Stunning visual design with smooth animations and effects</p>
                         </div>
                     </div>
                 </div>
@@ -84,7 +94,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2025 GameHub. Your Personal Game Collection.</p>
+            <p>&copy; 2025 Avebel. Your Personal Game Collection.</p>
         </div>
     </footer>
 
