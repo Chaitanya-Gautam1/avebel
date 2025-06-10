@@ -22,7 +22,8 @@ let gameState = {
         arcade: { owned: 0, cost: 12000, revenue: 47, baseRevenue: 47, baseCost: 12000 },
         oil: { owned: 0, cost: 130000, revenue: 260, baseRevenue: 260, baseCost: 130000 },
         bank: { owned: 0, cost: 1400000, revenue: 1400, baseRevenue: 1400, baseCost: 1400000 },
-        space: { owned: 0, cost: 20000000, revenue: 7800, baseRevenue: 7800, baseCost: 20000000 }
+        space: { owned: 0, cost: 20000000, revenue: 7800, baseRevenue: 7800, baseCost: 20000000 },
+        sun: { owned: 0, cost: 800000000, revenue: 20000, baseRevenue: 20000, baseCost: 800000000 }
     },
     
     // Settings
@@ -272,7 +273,8 @@ function getBusinessName(type) {
         arcade: 'Arcade',
         oil: 'Oil Company',
         bank: 'Investment Bank',
-        space: 'Space Program'
+        space: 'Space Program',
+        sun: 'Sun Energy Extraction'
     };
     return names[type] || type;
 }
