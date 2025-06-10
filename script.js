@@ -104,12 +104,7 @@ async function discoverGames() {
     
     // List of common game directory names to check
     const commonGameNames = [
-        'snake', 'tetris', 'pong', 'breakout', 'pacman', 'flappy-bird',
-        'space-invaders', 'asteroid', 'platformer', 'puzzle', 'racing',
-        'shooter', 'adventure', 'rpg', 'strategy', 'arcade', 'action',
-        'memory-game', 'tic-tac-toe', 'chess', 'checkers', 'sudoku',
-        'minesweeper', 'solitaire', 'poker', 'blackjack', 'slots'
-    ];
+        'Money Tycoon'];
     
     // Try to discover actual games by checking for index.html files
     for (const gameName of commonGameNames) {
@@ -155,55 +150,6 @@ function formatGameName(name) {
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 }
-
-// Create example games for demonstration
-function createExampleGames() {
-    return [
-        {
-            name: 'Snake Game',
-            path: 'Games/snake/',
-            directory: 'snake',
-            hasLogo: false,
-            description: 'Classic snake game where you eat food and grow longer!'
-        },
-        {
-            name: 'Tetris',
-            path: 'Games/tetris/',
-            directory: 'tetris',
-            hasLogo: false,
-            description: 'Arrange falling blocks to create complete lines!'
-        },
-        {
-            name: 'Space Invaders',
-            path: 'Games/space-invaders/',
-            directory: 'space-invaders',
-            hasLogo: false,
-            description: 'Defend Earth from alien invasion!'
-        },
-        {
-            name: 'Pac-Man',
-            path: 'Games/pacman/',
-            directory: 'pacman',
-            hasLogo: false,
-            description: 'Navigate mazes and collect dots while avoiding ghosts!'
-        },
-        {
-            name: 'Breakout',
-            path: 'Games/breakout/',
-            directory: 'breakout',
-            hasLogo: false,
-            description: 'Break all the bricks with your paddle and ball!'
-        },
-        {
-            name: 'Memory Game',
-            path: 'Games/memory-game/',
-            directory: 'memory-game',
-            hasLogo: false,
-            description: 'Test your memory by matching pairs of cards!'
-        }
-    ];
-}
-
 // Display games in the grid
 function displayGames(gamesToDisplay) {
     gamesGrid.innerHTML = '';
