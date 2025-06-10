@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameHub - Your Personal Game Collection</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+    
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-gamepad"></i>
+                <h1>GameHub</h1>
+            </div>
+            <nav class="nav">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#games" class="nav-link">Games</a>
+                <a href="#about" class="nav-link">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h2 class="hero-title">Welcome to Your Gaming Universe</h2>
+                    <p class="hero-subtitle">Discover and play amazing web games from your personal collection</p>
+                    <button class="cta-button" onclick="scrollToGames()">
+                        <i class="fas fa-play"></i>
+                        Start Playing
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section id="games" class="games-section">
+            <div class="container">
+                <h2 class="section-title">Game Collection</h2>
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="searchInput" placeholder="Search games..." class="search-input">
+                </div>
+                <div id="gamesGrid" class="games-grid">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Loading games...</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about" class="about-section">
+            <div class="container">
+                <h2 class="section-title">About GameHub</h2>
+                <div class="about-content">
+                    <p>GameHub is your personal gaming portal, showcasing your collection of web games in a beautiful, modern interface. Each game is automatically detected from your Games folder and presented with style.</p>
+                    <div class="features">
+                        <div class="feature">
+                            <i class="fas fa-rocket"></i>
+                            <h3>Fast Loading</h3>
+                            <p>Optimized for quick game discovery and launch</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-search"></i>
+                            <h3>Easy Search</h3>
+                            <p>Find your favorite games instantly</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h3>Responsive</h3>
+                            <p>Works perfectly on all devices</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 GameHub. Your Personal Game Collection.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
