@@ -105,11 +105,7 @@ async function discoverGames() {
     // Try to fetch the Games directory listing (this won't work on most static hosts)
     // So we'll try common game names that might exist
     const commonGameNames = [
-        'snake', 'tetris', 'pong', 'breakout', 'pacman', 'flappy-bird',
-        'space-invaders', 'asteroid', 'platformer', 'puzzle', 'racing',
-        'shooter', 'adventure', 'rpg', 'strategy', 'arcade', 'action',
-        'memory-game', 'tic-tac-toe', 'chess', 'checkers', 'sudoku',
-        'minesweeper', 'solitaire', 'poker', 'blackjack', 'slots'
+        'Money Tycoon'
     ];
     
     // Try to discover actual games by checking for index.html files
