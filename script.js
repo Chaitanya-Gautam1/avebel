@@ -102,9 +102,15 @@ async function loadGames() {
 async function discoverGames() {
     const discoveredGames = [];
     
-    // List of common game directory names to check
+    // Try to fetch the Games directory listing (this won't work on most static hosts)
+    // So we'll try common game names that might exist
     const commonGameNames = [
-        'Money Tycoon'];
+        'snake', 'tetris', 'pong', 'breakout', 'pacman', 'flappy-bird',
+        'space-invaders', 'asteroid', 'platformer', 'puzzle', 'racing',
+        'shooter', 'adventure', 'rpg', 'strategy', 'arcade', 'action',
+        'memory-game', 'tic-tac-toe', 'chess', 'checkers', 'sudoku',
+        'minesweeper', 'solitaire', 'poker', 'blackjack', 'slots'
+    ];
     
     // Try to discover actual games by checking for index.html files
     for (const gameName of commonGameNames) {
@@ -123,11 +129,6 @@ async function discoverGames() {
             // Game directory doesn't exist or isn't accessible
             continue;
         }
-    }
-    
-    // If no games found, create some example games for demonstration
-    if (discoveredGames.length === 0) {
-        return createExampleGames();
     }
     
     return discoveredGames;
@@ -150,6 +151,9 @@ function formatGameName(name) {
         .map(word => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 }
+
+
+
 // Display games in the grid
 function displayGames(gamesToDisplay) {
     gamesGrid.innerHTML = '';
@@ -222,9 +226,8 @@ function displayNoGames() {
     gamesGrid.innerHTML = `
         <div class="no-games">
             <i class="fas fa-gamepad" style="font-size: 3rem; margin-bottom: 20px; color: #4ecdc4;"></i>
-            <h3>No games found</h3>
-            <p>Add your games to the "Games" folder with the structure: Games/gamename/index.html</p>
-            <p>Each game folder can optionally include a logo.png file for a custom thumbnail.</p>
+            <h3>No games available</h3>
+            <p>Check back later for new games!</p>
         </div>
     `;
 }
@@ -422,6 +425,13 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+// Console welcome message
+console.log(`
+🎮 Welcome to GameHub!
+=====================================
+Discovering games from the repository...
+=====================================
+`);
 
 // Performance optimization: Lazy load images
 function setupLazyLoading() {
